@@ -10,8 +10,6 @@
 
 class Joueur {
 public:
-	Joueur();
-	virtual ~Joueur();
 };
 
 #endif /* JOUEUR_H_ */

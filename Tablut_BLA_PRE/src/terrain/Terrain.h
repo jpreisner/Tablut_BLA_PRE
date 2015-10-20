@@ -20,22 +20,19 @@ class Terrain {
 private:
 	Case cases[TAILLE_TERRAIN_X][TAILLE_TERRAIN_X];
 public:
-	Terrain();
-	virtual ~Terrain();
-
-	bool const estCaseDuMilieu (int x, int y) const {
+	bool estCaseDuMilieu (int x, int y) const {
 		return (x == TAILLE_TERRAIN_X/2) && (x == y);
 	}
 
 	Pion get(int x, int y){
 		if(x < 0 || y < 0 || x > TAILLE_TERRAIN_X-1 || x > TAILLE_TERRAIN_X-1)
-			throw std::out_of_range("Case : (" + x + ", " + y + ") est hors du terrain.");
+			throw std::out_of_range("Coordonnées en dehors du terrain");
 		return cases[x][y].getPion();
 	}
 
 	void set(int x, int y, Pion p){
 		if(x < 0 || y < 0 || x > TAILLE_TERRAIN_X-1 || x > TAILLE_TERRAIN_X-1)
-			throw std::out_of_range("Case : (" + x + ", " + y + ") est hors du terrain.");
+			throw std::out_of_range("Coordonnées en dehors du terrain");
 
 		cases[x][y].setPion(p);
 	}
@@ -95,8 +92,8 @@ public:
 		if(x_avant == x_apres && y_avant == y_apres)
 			return;
 
-		if(get(x_avant, y_avant) == NULL)
-			throw std::invalid_argument("Aucun pion n'est present en (" + x_avant + "," + y_avant + ")");
+		if(get(x_avant, y_avant) == Pion::NONE)
+			throw std::invalid_argument("Aucun pion n'est present dans la case.");
 
 		if(x_avant != x_apres && y_avant != y_apres)
 			throw std::invalid_argument("Impossible de faire le déplacement : Déplacement horizontal ou vertical autorisé uniquement.");
@@ -104,20 +101,19 @@ public:
 		// Horizontal
 		if(x_avant == x_apres){
 			for(int x = (x_avant<x_apres ? x = x_avant+1 : x = x_avant-1); x == x_apres; (x_avant < x_apres) ? x++ : x--){
-				if(get(x, y_avant) != NULL)
-					throw std::invalid_argument("Un pion est present en (" + x + ", " + y_avant + ")");
+				if(get(x, y_avant) != Pion::NONE)
+					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 			}
 		}
 		// Vertical
 		else{
 			for(int y = (y_avant<y_apres ? y = y_avant+1 : y = y_avant-1); y == y_apres; (y_avant < y_apres) ? y++ : y--){
-				if(get(x_avant, y) != NULL)
-								throw std::invalid_argument("Un pion est present en (" + x_avant + ", " + y + ")");
-
+				if(get(x_avant, y) != Pion::NONE)
+					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 			}
 		}
-		if(get(x_apres, y_apres) != NULL)
-			throw std::invalid_argument("Un pion est present en (" + x_apres + ", " + y_apres + ")");
+		if(get(x_apres, y_apres) != Pion::NONE)
+			throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 
 
 		Pion p = get(x_avant, y_avant);

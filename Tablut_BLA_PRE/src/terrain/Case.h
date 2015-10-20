@@ -17,13 +17,12 @@ private:
 	Pion pion;	// optional<Pion> = permet d'avoir un Pion ou d'avoir null
 
 public:
-	Case(Pion p = NULL) : pion(p) {};
-	virtual ~Case();
+	Case(Pion p = Pion::NONE) : pion(p) {};
 
-	bool const moscoviteEstPresent() const { return pion == Pion::MOSCOVITE; }
-	bool const soldatEstPresent() const { return pion == Pion::SOLDAT; }
-	bool const roiEstPresent() const { return pion == Pion::ROI; }
-	bool const aucunPionEstPresent() const { return pion == NULL; }
+	bool moscoviteEstPresent() const { return pion == Pion::MOSCOVITE; }
+	bool soldatEstPresent() const { return pion == Pion::SOLDAT; }
+	bool roiEstPresent() const { return pion == Pion::ROI; }
+	bool aucunPionEstPresent() const { return pion == Pion::NONE; }
 
 	Pion getPion() { return pion; }
 	void setPion(Pion p) { pion = p; }
