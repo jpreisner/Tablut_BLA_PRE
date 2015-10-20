@@ -41,6 +41,13 @@ public:
 	}
 
 	void initTerrain(){
+		/* initialisation de toutes les cases a NULL */
+		for(int i = 0; i < TAILLE_TERRAIN_X; i++){
+			for(int j = 0; j < TAILLE_TERRAIN_X; j++){
+				set(i, j, Pion::NONE);
+			}
+		}
+
 		/**
 		 * Roi (vert)
 		 */
@@ -49,7 +56,7 @@ public:
 		/**
 		 * Soldat (vert)
 		 */
-		for(int i = TAILLE_TERRAIN_X/2-3; i < TAILLE_TERRAIN_X/2-1; i++){
+		for(int i = TAILLE_TERRAIN_X/2-2; i < TAILLE_TERRAIN_X/2; i++){
 			set(TAILLE_TERRAIN_X/2, i, Pion::SOLDAT);
 			set(i, TAILLE_TERRAIN_X/2, Pion::SOLDAT);
 		}
@@ -63,11 +70,11 @@ public:
 		 * Moscovite (jaune)
 		 */
 
-		for(int i=(TAILLE_TERRAIN_X/2);i<(TAILLE_TERRAIN_X/2)+3;i++){
+		for(int i=(TAILLE_TERRAIN_X/2-1);i<(TAILLE_TERRAIN_X/2)+2;i++){
 			set(0, i, Pion::MOSCOVITE);
-			set(TAILLE_TERRAIN_X-1, i, Pion::MOSCOVITE);
 			set(i, 0, Pion::MOSCOVITE);
-			set(i, TAILLE_TERRAIN_X, Pion::MOSCOVITE);
+			set(TAILLE_TERRAIN_X-1, i, Pion::MOSCOVITE);
+			set(i, TAILLE_TERRAIN_X-1, Pion::MOSCOVITE);
 		}
 
 		set(TAILLE_TERRAIN_X/2+1, 1, Pion::MOSCOVITE);
@@ -115,6 +122,8 @@ public:
 		return res;
 	}
 
+	/* méthode qui déplace le piont de la case ayant les positions (x_avant,y_apres)
+	 * sur la case de position (x_apres,y_après)*/
 	void deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres){
 		if(x_avant == x_apres && y_avant == y_apres)
 			return;
@@ -127,14 +136,14 @@ public:
 
 		// Horizontal
 		if(x_avant == x_apres){
-			for(int x = (x_avant<x_apres ? x = x_avant+1 : x = x_avant-1); x == x_apres; (x_avant < x_apres) ? x++ : x--){
+			for(int x = (x_avant<x_apres ? x_avant+1 : x_avant-1); x == x_apres; (x_avant < x_apres) ? x++ : x--){
 				if(get(x, y_avant) != Pion::NONE)
 					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 			}
 		}
 		// Vertical
 		else{
-			for(int y = (y_avant<y_apres ? y = y_avant+1 : y = y_avant-1); y == y_apres; (y_avant < y_apres) ? y++ : y--){
+			for(int y = (y_avant<y_apres ? y_avant+1 : y_avant-1); y == y_apres; (y_avant < y_apres) ? y++ : y--){
 				if(get(x_avant, y) != Pion::NONE)
 					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 			}
@@ -144,6 +153,13 @@ public:
 
 
 		Pion p = get(x_avant, y_avant);
+
+		/* ajout du point sur la case*/
+		set(x_apres,y_apres,p);
+
+		/*suppression du piont courant*/
+		set(x_avant, y_avant,Pion());
+
 
 	}
 };
