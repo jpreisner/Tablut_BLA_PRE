@@ -27,13 +27,13 @@ public:
 		return (x == TAILLE_TERRAIN_X/2) && (x == y);
 	}
 
-	Pion get(int x, int y){
+	boost::optional<Pion> get(int x, int y){
 		if(x < 0 || y < 0 || x > TAILLE_TERRAIN_X-1 || x > TAILLE_TERRAIN_X-1)
 			throw std::out_of_range("Coordonnées en dehors du terrain");
 		return cases[x][y].getPion();
 	}
 
-	void set(int x, int y, Pion p){
+	void set(int x, int y, boost::optional<Pion> p){
 		if(x < 0 || y < 0 || x > TAILLE_TERRAIN_X-1 || x > TAILLE_TERRAIN_X-1)
 			throw std::out_of_range("Coordonnées en dehors du terrain");
 
@@ -41,12 +41,6 @@ public:
 	}
 
 	void initTerrain(){
-		/* initialisation de toutes les cases a NULL */
-		for(int i = 0; i < TAILLE_TERRAIN_X; i++){
-			for(int j = 0; j < TAILLE_TERRAIN_X; j++){
-				set(i, j, Pion::NONE);
-			}
-		}
 
 		/**
 		 * Roi (vert)
@@ -83,14 +77,17 @@ public:
 		set(TAILLE_TERRAIN_X-2, TAILLE_TERRAIN_X/2, Pion::MOSCOVITE);
 	}
 
-	std::string printPion(Pion p){
-		if(p == Pion::MOSCOVITE)
-			return "M";
-		else if(p == Pion::SOLDAT)
-			return "S";
-		else if(p == Pion::ROI)
-			return "R";
-		return " ";
+	std::string printPion(boost::optional<Pion> p){
+			if(!p){
+				return " ";
+			}else if(p == Pion::MOSCOVITE)
+				return "M";
+			else if(p == Pion::SOLDAT)
+				return "S";
+			else if(p == Pion::ROI)
+				return "R";
+			return " ";
+
 	}
 
 	std::string toString(){
@@ -152,13 +149,13 @@ public:
 			throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 
 
-		Pion p = get(x_avant, y_avant);
+		boost::optional<Pion> p = get(x_avant, y_avant);
 
 		/* ajout du point sur la case*/
 		set(x_apres,y_apres,p);
 
 		/*suppression du piont courant*/
-		set(x_avant, y_avant,Pion());
+		//set(x_avant, y_avant,);
 
 
 	}

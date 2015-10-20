@@ -10,10 +10,12 @@
 #include "terrain/Terrain.h"
 
 int main() {
+
 	Terrain terrain;
 	terrain.initTerrain();
 	std::cout << "Affichage du Terrain : " << std::endl;
 	std::cout << terrain.toString() << std::endl;
 }
+
 
 

@@ -9,23 +9,24 @@
 #define TERRAIN_CASE_H_
 
 #include <stddef.h>
+#include <boost/optional.hpp>
 
 #include "../Pion.h"
 
 class Case {
 private:
-	Pion pion;	// optional<Pion> = permet d'avoir un Pion ou d'avoir null
+	boost::optional<Pion> pion;	// optional<Pion> = permet d'avoir un Pion ou d'avoir null
 
 public:
-	Case(Pion p = Pion::NONE) : pion(p) {};
+	Case(boost::optional<Pion> p = boost::none) : pion(p) {};
 
 	bool moscoviteEstPresent() const { return pion == Pion::MOSCOVITE; }
 	bool soldatEstPresent() const { return pion == Pion::SOLDAT; }
 	bool roiEstPresent() const { return pion == Pion::ROI; }
-	bool aucunPionEstPresent() const { return pion == Pion::NONE; }
+	bool aucunPionEstPresent() const { return pion == boost::none; }
 
-	Pion getPion() { return pion; }
-	void setPion(Pion p) { pion = p; }
+	boost::optional<Pion> getPion() { return pion; }
+	void setPion(boost::optional<Pion> p) { pion = p; }
 
 };
 
