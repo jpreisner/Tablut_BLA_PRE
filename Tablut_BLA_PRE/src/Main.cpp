@@ -13,7 +13,7 @@ int main() {
 	Terrain terrain;
 	terrain.initTerrain();
 	std::cout << "Affichage du Terrain : " << std::endl;
-	terrain.toString();
+	std::cout << terrain.toString() << std::endl;
 }
 
 

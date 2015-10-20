@@ -8,11 +8,14 @@
 #ifndef TERRAIN_TERRAIN_H_
 #define TERRAIN_TERRAIN_H_
 
+#include <iostream>
 #include <stdexcept>
 #include <string>
+#include <sstream>
 
 #include "../Pion.h"
 #include "Case.h"
+
 
 #define TAILLE_TERRAIN_X 9
 
@@ -83,9 +86,33 @@ public:
 		return " ";
 	}
 
-	// TODO
 	std::string toString(){
-		return "";
+		std::string res = "    ";
+		std::stringstream sstm;
+
+		for(int i=0; i< TAILLE_TERRAIN_X; i++){
+			sstm << "  " << i << " ";
+		}
+		res += sstm.str() + "\n    ";
+		for(int i=0; i< TAILLE_TERRAIN_X; i++){
+			res += "+---";
+		}
+		res += "+\n";
+		for(int i=0; i< TAILLE_TERRAIN_X; i++){
+			std::stringstream sstm2;
+			sstm2 << "  " << i << " ";
+			res += sstm2.str();
+			for(int j=0; j < TAILLE_TERRAIN_X; j++){
+				res += "| " + printPion(get(i, j)) + " ";
+			}
+			res += "|\n    ";
+			for(int j=0; j< TAILLE_TERRAIN_X; j++){
+				res += "+---";
+			}
+			res += "+\n";
+		}
+
+		return res;
 	}
 
 	void deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres){
