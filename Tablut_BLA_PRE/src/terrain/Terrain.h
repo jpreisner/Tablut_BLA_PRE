@@ -78,9 +78,9 @@ public:
 	}
 
 	std::string printPion(boost::optional<Pion> p){
-			if(!p){
+			if(!p)
 				return " ";
-			}else if(p == Pion::MOSCOVITE)
+			else if(p == Pion::MOSCOVITE)
 				return "M";
 			else if(p == Pion::SOLDAT)
 				return "S";
@@ -125,7 +125,7 @@ public:
 		if(x_avant == x_apres && y_avant == y_apres)
 			return;
 
-		if(get(x_avant, y_avant) == Pion::NONE)
+		if(get(x_avant, y_avant) == boost::none)
 			throw std::invalid_argument("Aucun pion n'est present dans la case.");
 
 		if(x_avant != x_apres && y_avant != y_apres)
@@ -134,18 +134,18 @@ public:
 		// Horizontal
 		if(x_avant == x_apres){
 			for(int x = (x_avant<x_apres ? x_avant+1 : x_avant-1); x == x_apres; (x_avant < x_apres) ? x++ : x--){
-				if(get(x, y_avant) != Pion::NONE)
+				if(get(x, y_avant) != boost::none)
 					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 			}
 		}
 		// Vertical
 		else{
 			for(int y = (y_avant<y_apres ? y_avant+1 : y_avant-1); y == y_apres; (y_avant < y_apres) ? y++ : y--){
-				if(get(x_avant, y) != Pion::NONE)
+				if(get(x_avant, y) != boost::none)
 					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 			}
 		}
-		if(get(x_apres, y_apres) != Pion::NONE)
+		if(get(x_apres, y_apres) != boost::none)
 			throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
 
 
