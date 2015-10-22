@@ -155,7 +155,7 @@ public:
 		set(x_apres,y_apres,p);
 
 		/*suppression du piont courant*/
-		//set(x_avant, y_avant,);
+		set(x_avant, y_avant,boost::none);
 
 
 	}
