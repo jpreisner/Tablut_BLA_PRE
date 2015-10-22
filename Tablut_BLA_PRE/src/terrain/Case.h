@@ -8,7 +8,6 @@
 #ifndef TERRAIN_CASE_H_
 #define TERRAIN_CASE_H_
 
-#include <stddef.h>
 #include <boost/optional.hpp>
 
 #include "../Pion.h"

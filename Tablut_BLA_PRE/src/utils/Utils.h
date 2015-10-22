@@ -11,10 +11,17 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <stddef.h>
 
 
 class Utils {
 public:
+
+	static int getRandomValue(int min, int max){
+		srand(time(NULL));
+		return rand()%(max-min + 1) + min;
+	}
+
 	static bool saisieSecureInt(unsigned int &variable){
 		std::string temp;
 		while (true) {
