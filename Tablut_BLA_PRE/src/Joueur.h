@@ -25,6 +25,8 @@ public:
 	std::vector<Pion> const getMesTypesDePions() const{
 		return mesTypesDePions;
 	}
+
+
 };
 
 #endif /* JOUEUR_H_ */
