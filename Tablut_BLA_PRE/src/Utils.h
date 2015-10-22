@@ -12,7 +12,9 @@
 
 class Utils {
 public:
-
+	/**
+	 * get a random value between (min and max)
+	 */
 	static int getRandomValue(int min, int max){
 		return rand()%(max-min + 1) + min;
 	}

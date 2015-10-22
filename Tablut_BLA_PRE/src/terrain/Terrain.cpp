@@ -7,10 +7,6 @@
 
 #include "Terrain.h"
 
-	bool Terrain::estCaseDuMilieu (int x, int y) const {
-		return (x == TAILLE_TERRAIN_X/2) && (x == y);
-	}
-
 	boost::optional<Pion> Terrain::get(int x, int y){
 		if(x < 0 || y < 0 || x > TAILLE_TERRAIN_X-1 || x > TAILLE_TERRAIN_X-1)
 			throw std::out_of_range("Coordonnées en dehors du terrain");
@@ -22,6 +18,11 @@
 			throw std::out_of_range("Coordonnées en dehors du terrain");
 
 		cases[x][y].setPion(p);
+	}
+
+
+	bool Terrain::estCaseDuMilieu (int x, int y) const {
+		return (x == TAILLE_TERRAIN_X/2) && (x == y);
 	}
 
 	void Terrain::initTerrain(){

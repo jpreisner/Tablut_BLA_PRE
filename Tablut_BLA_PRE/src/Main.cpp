@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "terrain/Terrain.h"
+#include "Utils.h"
 
 int main() {
 
@@ -15,6 +16,10 @@ int main() {
 	terrain.initTerrain();
 	std::cout << "Affichage du Terrain : " << std::endl;
 	std::cout << terrain.toString() << std::endl;
+	/*for(int i=0; i<100 ; i++){
+		std::cout << Utils::getRandomValue(0,1)<< std::endl;
+	}*/
+
 }
 
 

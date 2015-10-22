@@ -16,149 +16,74 @@
 #include "../Pion.h"
 #include "Case.h"
 
-
 #define TAILLE_TERRAIN_X 9
 
 class Terrain {
 private:
 	Case cases[TAILLE_TERRAIN_X][TAILLE_TERRAIN_X];
 public:
-	bool estCaseDuMilieu (int x, int y) const {
-		return (x == TAILLE_TERRAIN_X/2) && (x == y);
-	}
 
-	boost::optional<Pion> get(int x, int y){
-		if(x < 0 || y < 0 || x > TAILLE_TERRAIN_X-1 || x > TAILLE_TERRAIN_X-1)
-			throw std::out_of_range("Coordonnées en dehors du terrain");
-		return cases[x][y].getPion();
-	}
+	/**
+	 * Getter && Setter
+	 */
+	boost::optional<Pion> get(int x, int y);
+	void set(int x, int y, boost::optional<Pion> p);
 
-	void set(int x, int y, boost::optional<Pion> p){
-		if(x < 0 || y < 0 || x > TAILLE_TERRAIN_X-1 || x > TAILLE_TERRAIN_X-1)
-			throw std::out_of_range("Coordonnées en dehors du terrain");
+	/**
+	 * Check if the case on position (x,y) is at the center of the terrain,
+	 * this case is accessible only to Pion::ROI
+	 */
+	bool estCaseDuMilieu(int x, int y) const;
 
-		cases[x][y].setPion(p);
-	}
+	/**
+	 * Init Terrain following this map :
+	 *      0   1   2   3   4   5   6   7   8
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  0 |   |   |   | M | M | M |   |   |   |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  1 |   |   |   |   | M |   |   |   |   |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  2 |   |   |   |   | S |   |   |   |   |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  3 | M |   |   |   | S |   |   |   | M |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  4 | M | M | S | S | R | S | S | M | M |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  5 | M |   |   |   | S |   |   |   | M |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  6 |   |   |   |   | S |   |   |   |   |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  7 |   |   |   |   | M |   |   |   |   |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 *  8 |   |   |   | M | M | M |   |   |   |
+	 *    +---+---+---+---+---+---+---+---+---+
+	 */
+	void initTerrain();
 
-	void initTerrain(){
+	/**
+	 * print the pion passed in parameter (M || S || R).
+	 */
+	std::string printPion(boost::optional<Pion> p);
 
-		/**
-		 * Roi (vert)
-		 */
-		set(TAILLE_TERRAIN_X/2, TAILLE_TERRAIN_X/2, Pion::ROI);
+	/**
+	 * print the terrain to get the display in comment of the method initTerrain
+	 */
+	std::string toString();
 
-		/**
-		 * Soldat (vert)
-		 */
-		for(int i = TAILLE_TERRAIN_X/2-2; i < TAILLE_TERRAIN_X/2; i++){
-			set(TAILLE_TERRAIN_X/2, i, Pion::SOLDAT);
-			set(i, TAILLE_TERRAIN_X/2, Pion::SOLDAT);
-		}
+	/**
+	 * move pion form the position (x_avant,y_avant) to the position (x_apres,y_apres)
+	 */
+	bool deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres);
 
-		for(int i = TAILLE_TERRAIN_X/2+1; i < TAILLE_TERRAIN_X/2+3; i++){
-			set(TAILLE_TERRAIN_X/2, i, Pion::SOLDAT);
-			set(i, TAILLE_TERRAIN_X/2, Pion::SOLDAT);
-		}
+	/**
+	 * test if the Pion::ROI is surrounded by all Pion::MOSCOVITE (or the central case)
+	 */
+	bool testPriseRoi(int x, int y);
 
-		/*
-		 * Moscovite (jaune)
-		 */
-
-		for(int i=(TAILLE_TERRAIN_X/2-1);i<(TAILLE_TERRAIN_X/2)+2;i++){
-			set(0, i, Pion::MOSCOVITE);
-			set(i, 0, Pion::MOSCOVITE);
-			set(TAILLE_TERRAIN_X-1, i, Pion::MOSCOVITE);
-			set(i, TAILLE_TERRAIN_X-1, Pion::MOSCOVITE);
-		}
-
-		set(TAILLE_TERRAIN_X/2, 1, Pion::MOSCOVITE);
-		set(TAILLE_TERRAIN_X/2, TAILLE_TERRAIN_X-2, Pion::MOSCOVITE);
-		set(1, TAILLE_TERRAIN_X/2, Pion::MOSCOVITE);
-		set(TAILLE_TERRAIN_X-2, TAILLE_TERRAIN_X/2, Pion::MOSCOVITE);
-	}
-
-	std::string printPion(boost::optional<Pion> p){
-			if(!p)
-				return " ";
-			else if(p == Pion::MOSCOVITE)
-				return "M";
-			else if(p == Pion::SOLDAT)
-				return "S";
-			else if(p == Pion::ROI)
-				return "R";
-			return " ";
-
-	}
-
-	std::string toString(){
-		std::string res = "    ";
-		std::stringstream sstm;
-
-		for(int i=0; i< TAILLE_TERRAIN_X; i++){
-			sstm << "  " << i << " ";
-		}
-		res += sstm.str() + "\n    ";
-		for(int i=0; i< TAILLE_TERRAIN_X; i++){
-			res += "+---";
-		}
-		res += "+\n";
-		for(int i=0; i< TAILLE_TERRAIN_X; i++){
-			std::stringstream sstm2;
-			sstm2 << "  " << i << " ";
-			res += sstm2.str();
-			for(int j=0; j < TAILLE_TERRAIN_X; j++){
-				res += "| " + printPion(get(i, j)) + " ";
-			}
-			res += "|\n    ";
-			for(int j=0; j< TAILLE_TERRAIN_X; j++){
-				res += "+---";
-			}
-			res += "+\n";
-		}
-
-		return res;
-	}
-
-	/* méthode qui déplace le piont de la case ayant les positions (x_avant,y_apres)
-	 * sur la case de position (x_apres,y_après)*/
-	void deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres){
-		if(x_avant == x_apres && y_avant == y_apres)
-			return;
-
-		if(get(x_avant, y_avant) == boost::none)
-			throw std::invalid_argument("Aucun pion n'est present dans la case.");
-
-		if(x_avant != x_apres && y_avant != y_apres)
-			throw std::invalid_argument("Impossible de faire le déplacement : Déplacement horizontal ou vertical autorisé uniquement.");
-
-		// Horizontal
-		if(x_avant == x_apres){
-			for(int x = (x_avant<x_apres ? x_avant+1 : x_avant-1); x == x_apres; (x_avant < x_apres) ? x++ : x--){
-				if(get(x, y_avant) != boost::none)
-					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
-			}
-		}
-		// Vertical
-		else{
-			for(int y = (y_avant<y_apres ? y_avant+1 : y_avant-1); y == y_apres; (y_avant < y_apres) ? y++ : y--){
-				if(get(x_avant, y) != boost::none)
-					throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
-			}
-		}
-		if(get(x_apres, y_apres) != boost::none)
-			throw std::invalid_argument("Un pion est present sur le chemin de déplacement");
-
-
-		boost::optional<Pion> p = get(x_avant, y_avant);
-
-		/* ajout du point sur la case*/
-		set(x_apres,y_apres,p);
-
-		/*suppression du piont courant*/
-		set(x_avant, y_avant,boost::none);
-
-
-	}
+	/**
+	 * test if the Pion next to the position(x,y) is surrounded by 2 opposite Pion
+	 */
+	void testPrisePion(int x, int y);
 };
 
 #endif /* TERRAIN_TERRAIN_H_ */
