@@ -30,13 +30,13 @@ public:
 	void set(int x, int y, boost::optional<Pion> p);
 
 	/**
-	 * Check if the case on position (x,y) is at the center of the terrain,
-	 * this case is accessible only to Pion::ROI
+	 * teste si la case de position (x,y) est au centre du terrain,
+	 * cette case n'est accessible QUE par le pion Pion::ROI
 	 */
 	bool estCaseDuMilieu(int x, int y) const;
 
 	/**
-	 * Init Terrain following this map :
+	 * Init Terrain avec la map suivante :
 	 *      0   1   2   3   4   5   6   7   8
 	 *    +---+---+---+---+---+---+---+---+---+
 	 *  0 |   |   |   | M | M | M |   |   |   |
@@ -61,27 +61,27 @@ public:
 	void initTerrain();
 
 	/**
-	 * print the pion passed in parameter (M || S || R).
+	 * affiche le pion passé en parametre (M || S || R).
 	 */
 	std::string printPion(boost::optional<Pion> p);
 
 	/**
-	 * print the terrain to get the display in comment of the method initTerrain
+	 * affiche le terrain comme dans le commentaire de la methode initTerrain
 	 */
 	std::string toString();
 
 	/**
-	 * move pion form the position (x_avant,y_avant) to the position (x_apres,y_apres)
+	 * deplace le pion de la position (x_avant,y_avant) a la position (x_apres,y_apres)
 	 */
 	bool deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres);
 
 	/**
-	 * test if the Pion::ROI is surrounded by all Pion::MOSCOVITE (or the central case)
+	 * teste si le Pion::ROI est entouré par des Pion::MOSCOVITE (ou la case centrale)
 	 */
 	bool testPriseRoi(int x, int y);
 
 	/**
-	 * test if the Pion next to the position(x,y) is surrounded by 2 opposite Pion
+	 * test si les pions à coté de la position(x,y) sotn entourrés par 2 Pion opposés
 	 */
 	void testPrisePion(int x, int y);
 };

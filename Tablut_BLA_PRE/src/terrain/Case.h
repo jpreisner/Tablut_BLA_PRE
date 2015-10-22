@@ -15,18 +15,16 @@
 class Case {
 private:
 	/**
-	 * optional<Pion> use boost::none instead of NULL
+	 * optional<Pion> utilise boost::none au lieu de NULL
 	 */
 	boost::optional<Pion> pion;
 
 public:
-	/**
-	 * Main constructor
-	 */
+
 	Case(boost::optional<Pion> p = boost::none) : pion(p) {};
 
 	/**
-	 * boolean functions to test which pion is on the case
+	 * fonctions booleennes pour tester quel pion est sur la case courante
 	 */
 	bool moscoviteEstPresent() const { return pion == Pion::MOSCOVITE; }
 	bool soldatEstPresent() const { return pion == Pion::SOLDAT; }

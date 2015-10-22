@@ -8,17 +8,20 @@
 #ifndef PARTIE_H_
 #define PARTIE_H_
 
+#include <iostream>
+
+#include "Joueur.h"
+#include "terrain/Terrain.h"
+#include "utils/Utils.h"
+
 class Partie {
 private:
 	Joueur j1;
 	Joueur j2;
 	Terrain terrain;
 public:
-	Partie();
+	Partie(){}
 
-	/**
-	 * launch partie
-	 */
 	void lancerPartie(){
 		unsigned int res;
 		do{
@@ -27,6 +30,8 @@ public:
 			Utils::saisieSecureInt(res);
 		}while(res != 1 && res != 2);
 
+		/* random */
+
 		if(res == 1){
 			// J1 -> Moscovites & J2 -> Roi+Soldat
 		}
@@ -34,9 +39,8 @@ public:
 
 
 	}
-	/**
-	 * end partie
-	 */
+
+
 	bool finPartie(){
 		return true;
 	}

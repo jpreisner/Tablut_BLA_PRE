@@ -18,7 +18,7 @@ class Utils {
 public:
 
 	/**
-	 * get a random value between (min and max)
+	 * valeur aleatoire entre nim et max
 	 */
 	static int getRandomValue(int min, int max){
 		srand(time(NULL));
@@ -26,7 +26,7 @@ public:
 	}
 
 	/**
-	 * saisie secure of integer
+	 * saisie secure d'entier
 	 */
 	static bool saisieSecureInt(unsigned int &variable){
 		std::string temp;
@@ -63,7 +63,7 @@ public:
 	}
 private:
 	/**
-	 * flush the cin buffer
+	 * vidage du buffer de saisie (cin)
 	 */
 	static void viderBuffer(){
 		std::cin.clear();

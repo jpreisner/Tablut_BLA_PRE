@@ -18,9 +18,13 @@ private:
 	std::vector<Pion> mesTypesDePions; // soit moscovite, soit roi & soldat
 
 public:
-	Joueur(std::vector<Pion> typesPion) : mesTypesDePions(typesPion) {};
+	Joueur(){
+	}
+	Joueur(std::vector<Pion> typesPion) : mesTypesDePions(typesPion){}
 
-	std::vector const getMesTypesDePions() const { return mesTypesDePions; }
+	std::vector<Pion> const getMesTypesDePions() const{
+		return mesTypesDePions;
+	}
 };
 
 #endif /* JOUEUR_H_ */

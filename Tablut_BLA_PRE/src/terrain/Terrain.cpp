@@ -104,8 +104,6 @@
 		return res;
 	}
 
-	/* méthode qui déplace le piont de la case ayant les positions (x_avant,y_apres)
-	 * sur la case de position (x_apres,y_après)*/
 	bool Terrain::deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres){
 		if(x_avant == x_apres && y_avant == y_apres){
 			throw std::invalid_argument("Aucun pion n'est present dans la case.");
