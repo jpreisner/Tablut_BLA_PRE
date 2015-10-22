@@ -119,7 +119,7 @@ public:
 		return res;
 	}
 
-	/* méthode qui déplace le piont de la case ayant les positions (x_avant,y_apres)
+	/* méthode qui déplace le pion de la case ayant les positions (x_avant,y_apres)
 	 * sur la case de position (x_apres,y_après)*/
 	void deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres){
 		if(x_avant == x_apres && y_avant == y_apres)
@@ -131,6 +131,9 @@ public:
 		if(x_avant != x_apres && y_avant != y_apres)
 			throw std::invalid_argument("Impossible de faire le déplacement : Déplacement horizontal ou vertical autorisé uniquement.");
 
+		/**
+		 * Verification que le pion peut aller en (x_apres, y_apres)
+		 */
 		// Horizontal
 		if(x_avant == x_apres){
 			for(int x = (x_avant<x_apres ? x_avant+1 : x_avant-1); x == x_apres; (x_avant < x_apres) ? x++ : x--){
@@ -151,12 +154,14 @@ public:
 
 		boost::optional<Pion> p = get(x_avant, y_avant);
 
-		/* ajout du point sur la case*/
-		set(x_apres,y_apres,p);
+		if(estCaseDuMilieu(x_apres, y_apres) && p != Pion::ROI)
+			throw std::invalid_argument("Impossible de mettre un pion autre que le Roi au milieu du terrain.");
 
-		/*suppression du piont courant*/
-		//set(x_avant, y_avant,);
+		/* ajout du point sur la case (x_apres, y_apres) */
+		set(x_apres, y_apres, p);
 
+		/* suppression du pion courant en (x_avant, y_avant) */
+		set(x_avant, y_avant, boost::none);
 
 	}
 };

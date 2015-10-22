@@ -8,8 +8,19 @@
 #ifndef JOUEUR_H_
 #define JOUEUR_H_
 
+#include <string>
+#include <vector>
+
+#include "Pion.h"
+
 class Joueur {
+private:
+	std::vector<Pion> mesTypesDePions; // soit moscovite, soit roi & soldat
+
 public:
+	Joueur(std::vector<Pion> typesPion) : mesTypesDePions(typesPion) {};
+
+	std::vector const getMesTypesDePions() const { return mesTypesDePions; }
 };
 
 #endif /* JOUEUR_H_ */
