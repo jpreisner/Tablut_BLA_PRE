@@ -1,8 +1,5 @@
 /*
  * Pion.h
- *
- *  Created on: 20 oct. 2015
- *      Author: Julien
  */
 
 #ifndef PION_H_

@@ -1,8 +1,5 @@
 /*
  * Case.h
- *
- *  Created on: 20 oct. 2015
- *      Author: Julien
  */
 
 #ifndef TERRAIN_CASE_H_

@@ -1,8 +1,5 @@
 /*
  * Terrain.h
- *
- *  Created on: 20 oct. 2015
- *      Author: Julien
  */
 
 #ifndef TERRAIN_TERRAIN_H_
@@ -84,6 +81,8 @@ public:
 	 * test si les pions à coté de la position(x,y) sotn entourrés par 2 Pion opposés
 	 */
 	void testPrisePion(int x, int y);
+
+	bool pionEstEncercle(int x, int y);
 };
 
 #endif /* TERRAIN_TERRAIN_H_ */

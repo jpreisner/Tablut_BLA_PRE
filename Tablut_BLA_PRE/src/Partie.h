@@ -1,8 +1,5 @@
 /*
  * Partie.h
- *
- *  Created on: 21 oct. 2015
- *      Author: Julien
  */
 
 #ifndef PARTIE_H_
@@ -21,17 +18,15 @@
 
 class Partie {
 private:
-	Joueur j1;
-	Joueur j2;
-	Terrain terrain;
+	std::vector<Joueur> joueurs;
+	Terrain *terrain = new Terrain();
 public:
 	Partie(){
-		terrain.initTerrain();
+		terrain->initTerrain();
 	}
 
 	void lancerPartie(){
 		unsigned int res;
-		unsigned int x_avant, y_avant,x_apres,y_apres;
 		int first;
 		std::vector<Pion> vectMosco { Pion::MOSCOVITE };
 		std::vector<Pion> vectRoiSoldat { Pion::SOLDAT, Pion::ROI };
@@ -43,19 +38,54 @@ public:
 
 		/* random pour  savoir qui va commencer */
 		first = Utils::getRandomValue(1, 2);
-		std::cout << "Le premier joueur à commencer est le joueur " << first << std::endl;
+		std::cout << "Le premier joueur a commence est : Joueur " << first << ".\n" << std::endl;
 
+		/**
+		 * Initialisation des joueurs
+		 */
 		if (res == 1) {
 			// J1 -> Moscovites & J2 -> Roi+Soldat
-			j1 = Joueur(vectMosco);
-			j2 = Joueur(vectRoiSoldat);
+			joueurs.push_back(Joueur(vectMosco));
+			joueurs.push_back(Joueur(vectRoiSoldat));
 		} else {
-			j2 = Joueur(vectMosco);
-			j1 = Joueur(vectRoiSoldat);
+			// J1 -> Roi+Soldat & J2 -> Moscovites
+			joueurs.push_back(Joueur(vectRoiSoldat));
+			joueurs.push_back(Joueur(vectMosco));
 		}
 
-		std::cout << "Affichage du Terrain : " << std::endl;
-		std::cout << terrain.toString() << std::endl;
+		std::cout << "===============================================" << std::endl;
+		std::cout << "               Le jeu commence !               " << std::endl;
+		std::cout << "===============================================" << std::endl;
+
+		int i = first-1;
+
+		bool finDePartie = false;
+
+		while(!finDePartie){
+			std::cout << "Joueur " << (i+1) << " : a toi de jouer !" << std::endl;
+
+			// Affichage du terrain
+			std::cout << terrain->toString() << std::endl;
+
+			// Le joueur (i+1) joue
+			joueurs[i].jouer(terrain);
+
+			finDePartie = finPartie();
+
+			// Changement de joueur
+			if(!finDePartie){
+				if(i == 0)
+					i = 1;
+				else
+					i = 0;
+			}
+		}
+
+		std::cout << "===============================================" << std::endl;
+		std::cout << "           Le joueur " << (i+1) << " a gagne !"  << std::endl;
+		std::cout << "===============================================" << std::endl;
+
+		/*
 
 		bool ok = false;
 		do {
@@ -65,7 +95,7 @@ public:
 			std::cout << " : entrez maintenant la position y du pion a deplacer" << std::endl;
 			Utils::saisieSecureInt(y_avant);
 
-			ok = std::find(j1.getMesTypesDePions().begin(), j1.getMesTypesDePions().end(), terrain.get(x_avant,y_avant))!= j1.getMesTypesDePions().end();
+			//ok = std::find(j1.getMesTypesDePions().begin(), j1.getMesTypesDePions().end(), terrain.get(x_avant,y_avant))!= j1.getMesTypesDePions().end();
 		} while (!ok);
 
 		ok = false;
@@ -85,15 +115,12 @@ public:
 		}while(!ok);
 
 		std::cout << terrain.toString() << std::endl;
+		 */
 
-	}
-
-	bool jouerTour(int x_avant, int y_avant, int x_apres, int y_apres){
-		return terrain.deplacerPion(x_avant, y_avant, x_apres, y_apres);
 	}
 
 	bool finPartie(){
-		return true;
+		return false;
 	}
 };
 

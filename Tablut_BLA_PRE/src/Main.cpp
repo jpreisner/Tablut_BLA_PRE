@@ -1,8 +1,5 @@
 /*
  * Main.cpp
- *
- *  Created on: 20 oct. 2015
- *      Author: Julien
  */
 
 #include <iostream>
@@ -20,6 +17,7 @@ int main() {
 	for(int i=0; i<100 ; i++){
 		std::cout << Utils::getRandomValue(0,1)<< std::endl;
 	}*/
+
 	Partie partie;
 	partie.lancerPartie();
 }
