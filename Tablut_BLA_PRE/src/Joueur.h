@@ -50,7 +50,11 @@ public:
 		return "null";
 	}
 
-	void jouer(Terrain *terrain) {
+	/**
+	 * Retourne true si les conditions de fin de partie sont remplies
+	 * 			false sinon
+	 */
+	bool jouer(Terrain *terrain) {
 		/**
 		 * Selection de (x_avant, y_avant)
 		 */
@@ -89,6 +93,17 @@ public:
 		 * Verifie si un pion a ete pris. Si c'est le cas il sera supprime du jeu
 		 */
 		terrain->testPrisePion(x_apres,y_apres);
+
+		/**
+		 * Conditions de fin de partie
+		 */
+		if(terrain->get(x_apres, y_apres) == Pion::MOSCOVITE)
+			return terrain->testPriseRoi(x_apres, y_apres);
+
+		else if(terrain->get(x_apres, y_apres) == Pion::ROI)
+			return (x_apres == 0 || x_apres == TAILLE_TERRAIN_X-1 || y_avant == 0 || y_avant == TAILLE_TERRAIN_X-1);
+
+		return false;
 	}
 };
 

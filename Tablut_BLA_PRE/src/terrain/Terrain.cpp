@@ -172,30 +172,34 @@ bool Terrain::deplacerPion(int x_avant, int y_avant, int x_apres, int y_apres){
 
 bool Terrain::testPriseRoi(int x, int y){
 	int posRoiX, posRoiY;
-	bool topKink, bottomKing,leftKing,rightKing;
+	bool topKing, bottomKing,leftKing,rightKing;
 
 	/* check king position */
-	if(get(x-1,y) == Pion::ROI){
+	if(x > 0 && get(x-1,y) == Pion::ROI){
 		posRoiY = y;
 		posRoiX = x-1;
-	}else if(get(x+1,y) == Pion::ROI){
+	}else if(x < TAILLE_TERRAIN_X-1 && get(x+1,y) == Pion::ROI){
 		posRoiY = y;
 		posRoiX = x+1;
-	}else if(get(x,y-1) == Pion::ROI){
+	}else if(y > 0 && get(x,y-1) == Pion::ROI){
 		posRoiY = y-1;
 		posRoiX = x;
-	}else if(get(x,y+1) == Pion::ROI){
+	}else if(y < TAILLE_TERRAIN_X-1 && get(x,y+1) == Pion::ROI){
 		posRoiY = y+1;
 		posRoiX = x;
 	}
+	// Pas de roi aux alentours
+	else{
+		return false;
+	}
 
 	/* check around king */
-	topKink = get(posRoiX,posRoiY+1) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX,posRoiY+1);
-	bottomKing = get(posRoiX,posRoiY-1) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX,posRoiY-1);
-	leftKing = get(posRoiX-1,posRoiY) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX-1,posRoiY);
-	rightKing = get(posRoiX+1,posRoiY) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX+1,posRoiY);
+	topKing = posRoiY < TAILLE_TERRAIN_X-1 &&  (get(posRoiX,posRoiY+1) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX,posRoiY+1));
+	bottomKing = posRoiY > 0 && (get(posRoiX,posRoiY-1) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX,posRoiY-1));
+	leftKing = posRoiX > 0 && (get(posRoiX-1,posRoiY) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX-1,posRoiY));
+	rightKing = posRoiX < TAILLE_TERRAIN_X-1 && (get(posRoiX+1,posRoiY) == Pion::MOSCOVITE || estCaseDuMilieu(posRoiX+1,posRoiY));
 
-	return(topKink && bottomKing && rightKing && leftKing);
+	return(topKing && bottomKing && rightKing && leftKing);
 
 }
 

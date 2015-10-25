@@ -68,9 +68,7 @@ public:
 			std::cout << terrain->toString() << std::endl;
 
 			// Le joueur (i+1) joue
-			joueurs[i].jouer(terrain);
-
-			finDePartie = finPartie();
+			finDePartie = joueurs[i].jouer(terrain);
 
 			// Changement de joueur
 			if(!finDePartie){
@@ -84,43 +82,8 @@ public:
 		std::cout << "===============================================" << std::endl;
 		std::cout << "           Le joueur " << (i+1) << " a gagne !"  << std::endl;
 		std::cout << "===============================================" << std::endl;
-
-		/*
-
-		bool ok = false;
-		do {
-			std::cout << "Joueur " << res
-					<< " : entrez veuillez saisir la position x du pion a deplacer" << std::endl;
-			Utils::saisieSecureInt(x_avant);
-			std::cout << " : entrez maintenant la position y du pion a deplacer" << std::endl;
-			Utils::saisieSecureInt(y_avant);
-
-			//ok = std::find(j1.getMesTypesDePions().begin(), j1.getMesTypesDePions().end(), terrain.get(x_avant,y_avant))!= j1.getMesTypesDePions().end();
-		} while (!ok);
-
-		ok = false;
-		do{
-			try{
-				std::cout << "Joueur " << res
-						<< " : entrez veuillez saisir la position x de la case ou vous voulez déplacer le pion" << std::endl;
-				Utils::saisieSecureInt(x_apres);
-				std::cout << " : entrez maintenant la position y de la case ou vous voulez déplacer le pion" << std::endl;
-				Utils::saisieSecureInt(y_apres);
-
-				terrain.deplacerPion(x_avant,y_avant,x_apres,y_apres);
-				ok = true;
-			}catch(const std::invalid_argument &){
-				ok = false;
-			}
-		}while(!ok);
-
-		std::cout << terrain.toString() << std::endl;
-		 */
-
-	}
-
-	bool finPartie(){
-		return false;
+		// Affichage du terrain
+		std::cout << terrain->toString() << std::endl;
 	}
 };
 
