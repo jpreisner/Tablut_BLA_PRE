@@ -89,7 +89,7 @@ std::string Terrain::toString(){
 		sstm2 << "  " << i << " ";
 		res += sstm2.str();
 		for(int j=0; j < TAILLE_TERRAIN_X; j++){
-			res += "| " + printPion(get(i, j)) + " ";
+			res += "| " + printPion(get(j, i)) + " ";
 		}
 		res += "|\n    ";
 		for(int j=0; j< TAILLE_TERRAIN_X; j++){
