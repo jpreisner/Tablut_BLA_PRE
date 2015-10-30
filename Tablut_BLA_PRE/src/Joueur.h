@@ -77,13 +77,13 @@ public:
 		 * Selection de (x_apres, y_apres)
 		 */
 		unsigned int x_apres, y_apres;
-		std::cout << "Selectionnez les coordonnees (x,y) d'une case où vous souhaitez deplacer le pion [" <<
+		std::cout << "Selectionnez les coordonnees (x,y) d'une case oï¿½ vous souhaitez deplacer le pion [" <<
 				pionToString(terrain->get(x_avant, y_avant))<< "] (entrez x, puis entrez y) :" << std::endl;
 		Utils::saisieSecureInt(x_apres);
 		Utils::saisieSecureInt(y_apres);
 
 		while(!terrain->deplacerPion(x_avant, y_avant, x_apres, y_apres)){
-			std::cout << "Selectionnez de nouvelles coordonnees (x,y) d'une case où vous souhaitez deplacer le pion [" <<
+			std::cout << "Selectionnez de nouvelles coordonnees (x,y) d'une case oï¿½ vous souhaitez deplacer le pion [" <<
 					pionToString(terrain->get(x_avant, y_avant))<< "] (entrez x, puis entrez y) :" << std::endl;
 			Utils::saisieSecureInt(x_apres);
 			Utils::saisieSecureInt(y_apres);
@@ -101,7 +101,7 @@ public:
 			return terrain->testPriseRoi(x_apres, y_apres);
 
 		else if(terrain->get(x_apres, y_apres) == Pion::ROI)
-			return (x_apres == 0 || x_apres == TAILLE_TERRAIN_X-1 || y_avant == 0 || y_avant == TAILLE_TERRAIN_X-1);
+			return (x_apres == 0 || x_apres == TAILLE_TERRAIN_X-1 || y_apres == 0 || y_apres == TAILLE_TERRAIN_X-1);
 
 		return false;
 	}
